@@ -101,6 +101,40 @@ body.ltr .cw{left:auto;right:20px}
 .cfoot input:focus{border-color:#b07040}
 .send{background:var(--accent);color:#fff;border:none;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;flex-shrink:0}
 .send:disabled{opacity:.45;cursor:not-allowed}
+
+/* BOOKINGS */
+.page{display:none}.page.active{display:block}
+.nav-tabs{display:flex;background:var(--surface);border-bottom:2px solid var(--border);padding:0 28px;max-width:960px;margin:0 auto}
+.nav-tab{padding:14px 20px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Heebo',sans-serif}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.nav-tab:hover{color:var(--text)}
+.booking-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group textarea{border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'Heebo',sans-serif;font-size:14px;color:var(--text);background:var(--bg);outline:none;transition:border .15s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:70px}
+.save-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:12px 28px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-top:8px}
+.save-btn:hover{opacity:.88}
+.save-btn:disabled{opacity:.5;cursor:not-allowed}
+.bookings-list{display:flex;flex-direction:column;gap:12px}
+.booking-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;gap:16px;align-items:flex-start}
+.booking-dates{background:var(--accent);color:#fff;border-radius:8px;padding:10px 14px;text-align:center;min-width:70px;flex-shrink:0}
+.booking-dates .month{font-size:10px;text-transform:uppercase;opacity:.8}
+.booking-dates .day{font-size:22px;font-weight:700;line-height:1}
+.booking-info{flex:1}
+.booking-info h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.booking-info p{font-size:12px;color:var(--muted);margin-bottom:2px}
+.booking-price{font-size:15px;font-weight:700;color:var(--accent)}
+.booking-duration{font-size:11px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:4px;display:inline-block;margin-top:4px}
+.delete-btn{background:none;border:none;cursor:pointer;color:#ccc;font-size:18px;padding:4px}
+.delete-btn:hover{color:#e53935}
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}
+.empty-state div{font-size:40px;margin-bottom:12px}
+.success-msg{background:#e6f4ea;color:#1e6e3a;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600;display:none}
+.summary-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
 </style>
 </head>
 <body class="rtl">
@@ -120,6 +154,16 @@ body.ltr .cw{left:auto;right:20px}
     </div>
   </div>
 </header>
+
+<!-- NAV -->
+<div style="background:var(--surface);border-bottom:1px solid var(--border)">
+  <div class="nav-tabs" id="nav-tabs">
+    <button class="nav-tab active" onclick="switchPage('guides')" id="tab-guides">📚 <span id="tab-guides-lbl">מדריכים</span></button>
+    <button class="nav-tab" onclick="switchPage('bookings')" id="tab-bookings">📅 <span id="tab-bookings-lbl">לוח שמירות</span></button>
+  </div>
+</div>
+
+<div id="page-guides" class="page active">
 <div class="tb"><div class="ti" id="tabs"></div></div>
 <div class="main">
   <div class="stats" id="stats"></div>
@@ -127,6 +171,55 @@ body.ltr .cw{left:auto;right:20px}
   <div class="grid" id="grid"></div>
   <div class="det" id="det"></div>
 </div>
+</div><!-- end guides page -->
+
+<!-- BOOKINGS PAGE -->
+<div id="page-bookings" class="page" style="max-width:960px;margin:0 auto;padding:28px">
+  
+  <div class="summary-cards" id="summary-cards"></div>
+
+  <div class="booking-form">
+    <div style="font-size:15px;font-weight:700;margin-bottom:16px;color:var(--accent)" id="form-title">+ הוסף שמירה חדשה</div>
+    <div id="success-msg" class="success-msg">✅ השמירה נשמרה בהצלחה!</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label id="lbl-dog">שם הכלב</label>
+        <input id="f-dog" type="text" placeholder="רקס">
+      </div>
+      <div class="form-group">
+        <label id="lbl-owner">שם הבעלים</label>
+        <input id="f-owner" type="text" placeholder="ישראל ישראלי">
+      </div>
+      <div class="form-group">
+        <label id="lbl-phone">טלפון</label>
+        <input id="f-phone" type="tel" placeholder="050-0000000">
+      </div>
+      <div class="form-group">
+        <label id="lbl-price">מחיר (₪)</label>
+        <input id="f-price" type="number" placeholder="150">
+      </div>
+      <div class="form-group">
+        <label id="lbl-start">מתאריך</label>
+        <input id="f-start" type="date">
+      </div>
+      <div class="form-group">
+        <label id="lbl-end">עד תאריך</label>
+        <input id="f-end" type="date">
+      </div>
+      <div class="form-group full">
+        <label id="lbl-notes">הערות</label>
+        <textarea id="f-notes" placeholder="אלרגיות, תרופות, הוראות מיוחדות..."></textarea>
+      </div>
+    </div>
+    <button class="save-btn" id="save-btn" onclick="saveBooking()">💾 <span id="lbl-save">שמור שמירה</span></button>
+  </div>
+
+  <div style="font-size:15px;font-weight:700;margin-bottom:16px" id="list-title">שמירות קרובות</div>
+  <div class="bookings-list" id="bookings-list">
+    <div class="empty-state"><div>🐾</div><span id="empty-lbl">אין שמירות עדיין</span></div>
+  </div>
+</div>
+
 <div class="cw">
   <div class="cp" id="cp">
     <div class="cphead"><div class="chl"><span class="dot"></span>Lea AI</div><button class="cx" onclick="toggleChat()">&#x2715;</button></div>
@@ -179,6 +272,141 @@ function hideDet(){document.getElementById("det").classList.remove("on");documen
 function toggleChat(){chatOpen=!chatOpen;document.getElementById("cp").classList.toggle("on",chatOpen);document.getElementById("fab").style.display=chatOpen?"none":"flex"}
 function askAbout(title){if(!chatOpen)toggleChat();const ci=document.getElementById("ci");const t=T[L];ci.value=L==="he"?`יש לי שאלה על "${title}" – `:L==="fr"?`J'ai une question sur "${title}" – `:`I have a question about "${title}" – `;ci.focus()}
 async function send(){const ci=document.getElementById("ci"),text=ci.value.trim();if(!text)return;const sb=document.getElementById("sb");sb.disabled=true;ci.value="";const t=T[L];const msgs=document.getElementById("msgs");msgs.innerHTML+=`<div class="m u">${text}</div><div class="m a" id="thi" style="opacity:.5;font-style:italic">${t.think}</div>`;msgs.scrollTop=msgs.scrollHeight;try{const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:t.sys,messages:[{role:"user",content:text}]})});const d=await r.json();document.getElementById("thi").remove();msgs.innerHTML+=`<div class="m a">${(d.content?.[0]?.text||"Error").replace(/\n/g,"<br>")}</div>`}catch{document.getElementById("thi").remove();msgs.innerHTML+=`<div class="m a">⚠️ Error</div>`}sb.disabled=false;msgs.scrollTop=msgs.scrollHeight}
+
+const SUPA_URL = 'https://mexxmnobyvqbymhvalzi.supabase.co';
+const SUPA_KEY = 'sb_publishable_VeCrWVVytQAffw1zD_qNog_986Abagu';
+
+async function supaFetch(path, method='GET', body=null){
+  const opts = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPA_KEY,
+      'Authorization': 'Bearer ' + SUPA_KEY,
+      'Prefer': method==='POST' ? 'return=representation' : ''
+    }
+  };
+  if(body) opts.body = JSON.stringify(body);
+  const r = await fetch(SUPA_URL + path, opts);
+  return r.json();
+}
+
+function switchPage(page){
+  document.getElementById('page-guides').classList.toggle('active', page==='guides');
+  document.getElementById('page-bookings').classList.toggle('active', page==='bookings');
+  document.getElementById('tab-guides').classList.toggle('active', page==='guides');
+  document.getElementById('tab-bookings').classList.toggle('active', page==='bookings');
+  if(page==='bookings') loadBookings();
+}
+
+function formatDate(d){
+  const dt = new Date(d);
+  return dt.toLocaleDateString('he-IL',{day:'2-digit',month:'2-digit'});
+}
+
+function daysDiff(s,e){
+  return Math.round((new Date(e)-new Date(s))/(1000*60*60*24));
+}
+
+async function loadBookings(){
+  const list = document.getElementById('bookings-list');
+  list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)">טוען...</div>';
+  
+  try {
+    const data = await supaFetch('/rest/v1/bookings?select=*&order=start_date.asc');
+    
+    if(!data || data.length === 0){
+      list.innerHTML = '<div class="empty-state"><div>🐾</div><span>אין שמירות עדיין</span></div>';
+      updateSummary([]);
+      return;
+    }
+    
+    updateSummary(data);
+    
+    list.innerHTML = data.map(b => {
+      const start = new Date(b.start_date);
+      const days = daysDiff(b.start_date, b.end_date);
+      const months = ['ינו','פבר','מרץ','אפר','מאי','יוני','יולי','אוג','ספט','אוק','נוב','דצמ'];
+      return `
+        <div class="booking-card">
+          <div class="booking-dates">
+            <div class="month">${months[start.getMonth()]}</div>
+            <div class="day">${start.getDate()}</div>
+          </div>
+          <div class="booking-info">
+            <h3>🐕 ${b.dog_name}</h3>
+            <p>👤 ${b.owner_name}${b.phone ? ' · 📞 ' + b.phone : ''}</p>
+            <p>📅 ${formatDate(b.start_date)} → ${formatDate(b.end_date)}</p>
+            ${b.notes ? '<p>📝 ' + b.notes + '</p>' : ''}
+            <span class="booking-duration">${days} ${days===1?'יום':'ימים'}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+            ${b.price ? '<div class="booking-price">₪' + b.price + '</div>' : ''}
+            <button class="delete-btn" onclick="deleteBooking('${b.id}')">🗑️</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch(e) {
+    list.innerHTML = '<div class="empty-state"><div>⚠️</div><span>שגיאה בטעינה</span></div>';
+  }
+}
+
+function updateSummary(data){
+  const total = data.length;
+  const income = data.reduce((s,b)=>s+(b.price||0),0);
+  const upcoming = data.filter(b=>new Date(b.start_date)>=new Date()).length;
+  document.getElementById('summary-cards').innerHTML = `
+    <div class="stat"><div class="stat-val">${total}</div><div class="stat-lbl">סה"כ שמירות</div></div>
+    <div class="stat"><div class="stat-val">${upcoming}</div><div class="stat-lbl">שמירות קרובות</div></div>
+    <div class="stat"><div class="stat-val">₪${income.toLocaleString()}</div><div class="stat-lbl">הכנסה כוללת</div></div>
+  `;
+}
+
+async function saveBooking(){
+  const dog = document.getElementById('f-dog').value.trim();
+  const owner = document.getElementById('f-owner').value.trim();
+  const start = document.getElementById('f-start').value;
+  const end = document.getElementById('f-end').value;
+  
+  if(!dog || !owner || !start || !end){
+    alert('נא למלא שם כלב, בעלים ותאריכים!');
+    return;
+  }
+  
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  
+  const body = {
+    dog_name: dog,
+    owner_name: owner,
+    phone: document.getElementById('f-phone').value.trim(),
+    start_date: start,
+    end_date: end,
+    price: parseFloat(document.getElementById('f-price').value)||null,
+    notes: document.getElementById('f-notes').value.trim()
+  };
+  
+  try {
+    await supaFetch('/rest/v1/bookings', 'POST', body);
+    // Clear form
+    ['f-dog','f-owner','f-phone','f-price','f-start','f-end','f-notes'].forEach(id=>document.getElementById(id).value='');
+    const msg = document.getElementById('success-msg');
+    msg.style.display='block';
+    setTimeout(()=>msg.style.display='none', 3000);
+    loadBookings();
+  } catch(e) {
+    alert('שגיאה בשמירה');
+  }
+  btn.disabled = false;
+}
+
+async function deleteBooking(id){
+  if(!confirm('למחוק שמירה זו?')) return;
+  await supaFetch('/rest/v1/bookings?id=eq.'+id, 'DELETE');
+  loadBookings();
+}
+
 setLang("he");
 </script>
 </body>
