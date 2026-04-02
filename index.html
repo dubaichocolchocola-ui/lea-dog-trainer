@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lea Dog Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f6f3ee;--surface:#fff;--surface2:#f0ece4;--text:#1c1410;--muted:#8a7560;--accent:#7c3d12;--accent-light:#f5ede3;--border:#e2d9cc;--gold:#d4a87a;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.07)}
+body{font-family:"Heebo",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body.rtl{direction:rtl}body.ltr{direction:ltr}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px}
+.hi{max-width:960px;margin:0 auto;height:72px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:16px}
+.lb{width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lb svg{width:30px;height:30px}
+.lt{display:flex;flex-direction:column;gap:1px}
+.ln{font-size:22px;font-weight:700;color:var(--accent);letter-spacing:3px;font-family:Georgia,serif;line-height:1}
+.ld{height:1px;background:var(--gold);margin:3px 0}
+.ls{font-size:9.5px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.ltag{font-size:10px;color:var(--gold);font-weight:500}
+.hr{display:flex;align-items:center;gap:10px}
+.lsw{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.lb2{background:none;border:none;padding:7px 11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);font-family:"Heebo",sans-serif;transition:all .15s}
+.lb2:not(:last-child){border-left:1px solid var(--border)}
+body.rtl .lb2:not(:last-child){border-left:none;border-right:1px solid var(--border)}
+.lb2.active{background:var(--accent);color:#fff}
+.lb2:hover:not(.active){background:var(--surface2)}
+.hbtn{background:var(--accent);color:#fff;border:none;padding:9px 16px;border-radius:8px;font-family:"Heebo",sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+.hbtn:hover{opacity:.88}
+.tb{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px}
+.ti{max-width:960px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:10px 0}
+.tab{padding:7px 16px;border-radius:6px;border:1px solid transparent;background:none;font-family:"Heebo",sans-serif;font-size:13px;cursor:pointer;color:var(--muted);white-space:nowrap;transition:all .15s}
+.tab:hover{background:var(--surface2)}
+.tab.active{background:var(--accent-light);border-color:var(--gold);color:var(--accent);font-weight:600}
+.main{max-width:960px;margin:0 auto;padding:28px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.sv{font-size:22px;font-weight:700;color:var(--accent);line-height:1}
+.sl{font-size:11px;color:var(--muted);margin-top:4px}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sh h2{font-size:15px;font-weight:700}
+.sh span{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:box-shadow .15s,transform .15s;overflow:hidden}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.cs{height:4px}.cb{padding:16px}
+.cr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px}
+.b-basic{background:#e6f4ea;color:#1e6e3a}.b-adv{background:#fdeaea;color:#a32020}.b-mid{background:#fff4e0;color:#a05c00}.b-pup{background:#e8f0fe;color:#1a53a0}
+.ct{font-size:11px;color:var(--muted)}
+.card h3{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.4}
+.cd{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.ctags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:3px 8px;background:var(--surface2);border-radius:4px;color:var(--muted)}
+.cf{padding:10px 16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.cc{font-size:11px;color:var(--muted)}.ar{font-size:13px;color:var(--accent);font-weight:700}
+.det{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}.det.on{display:block}
+.dh{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;gap:14px}
+.di{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.dht h2{font-size:22px;font-weight:900;line-height:1.2;margin-bottom:6px}
+.dbd{display:flex;gap:6px;flex-wrap:wrap}.dbody{padding:24px}
+.dd{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.sg{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.sc{display:flex;gap:14px;background:var(--surface2);border-radius:10px;padding:14px 16px;align-items:flex-start}
+.sn{width:28px;height:28px;min-width:28px;border-radius:6px;color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.st{font-size:13px;font-weight:700;margin-bottom:3px}.sd{font-size:12px;color:var(--muted);line-height:1.65}
+.tc{background:var(--accent-light);border:1px solid var(--gold);border-radius:10px;padding:14px 16px;display:flex;gap:12px}
+.ttl{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.ttx{font-size:12px;color:var(--text);line-height:1.7}
+.br{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.bbtn{background:none;border:none;cursor:pointer;font-family:"Heebo",sans-serif;font-size:13px;color:var(--accent);font-weight:600;padding:0}
+.abtn{display:block;width:100%;margin-top:20px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:13px;font-family:"Heebo",sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.abtn:hover{opacity:.88}
+.cw{position:fixed;bottom:20px;left:20px;z-index:999;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+body.ltr .cw{left:auto;right:20px}
+.cfab{background:var(--accent);color:#fff;border:none;border-radius:14px;padding:11px 18px;font-family:"Heebo",sans-serif;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(124,61,18,.28);display:flex;align-items:center;gap:7px}
+.cp{width:330px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.12);display:none;flex-direction:column;overflow:hidden}
+.cp.on{display:flex}
+.cphead{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.chl{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.cx{background:none;border:none;font-size:16px;cursor:pointer;color:var(--muted)}
+.cms{height:240px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.m{max-width:82%;padding:9px 12px;border-radius:10px;font-size:12px;line-height:1.6}
+.m.u{background:var(--accent);color:#fff;align-self:flex-start;border-radius:10px 10px 3px 10px}
+.m.a{background:var(--surface2);color:var(--text);align-self:flex-end;border-radius:10px 10px 10px 3px}
+.cfoot{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border)}
+.cfoot input{flex:1;border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-family:"Heebo",sans-serif;font-size:12px;outline:none;background:var(--bg);color:var(--text)}
+.cfoot input:focus{border-color:#b07040}
+.send{background:var(--accent);color:#fff;border:none;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;flex-shrink:0}
+.send:disabled{opacity:.45;cursor:not-allowed}
+</style>
+</head>
+<body class="rtl">
+<header>
+  <div class="hi">
+    <div class="logo">
+      <div class="lb"><svg viewBox="0 0 34 34" fill="none"><ellipse cx="17" cy="20" rx="8" ry="6.5" fill="white" opacity=".92"/><ellipse cx="10" cy="13" rx="3.8" ry="3.2" fill="white" opacity=".92"/><ellipse cx="24" cy="13" rx="3.8" ry="3.2" fill="white" opacity=".92"/><ellipse cx="13.5" cy="8" rx="3.2" ry="2.8" fill="white" opacity=".92"/><ellipse cx="20.5" cy="8" rx="3.2" ry="2.8" fill="white" opacity=".92"/></svg></div>
+      <div class="lt"><div class="ln">LEA</div><div class="ld"></div><div class="ls">Dog Trainer</div><div class="ltag" id="ltag">מאמנת כלבים מקצועית</div></div>
+    </div>
+    <div class="hr">
+      <div class="lsw">
+        <button class="lb2 active" onclick="setLang('he')">&#127470;&#127473; עב</button>
+        <button class="lb2" onclick="setLang('en')">&#127482;&#127480; EN</button>
+        <button class="lb2" onclick="setLang('fr')">&#127467;&#127479; FR</button>
+      </div>
+      <button class="hbtn" onclick="toggleChat()">&#128062; <span id="cbl">שאל את Lea AI</span></button>
+    </div>
+  </div>
+</header>
+<div class="tb"><div class="ti" id="tabs"></div></div>
+<div class="main">
+  <div class="stats" id="stats"></div>
+  <div class="sh"><h2 id="stitle"></h2><span id="scnt"></span></div>
+  <div class="grid" id="grid"></div>
+  <div class="det" id="det"></div>
+</div>
+<div class="cw">
+  <div class="cp" id="cp">
+    <div class="cphead"><div class="chl"><span class="dot"></span>Lea AI</div><button class="cx" onclick="toggleChat()">&#x2715;</button></div>
+    <div class="cms" id="msgs"></div>
+    <div class="cfoot"><input id="ci" onkeydown="if(event.key==='Enter')send()"><button class="send" id="sb" onclick="send()">&#8593;</button></div>
+  </div>
+  <button class="cfab" id="fab" onclick="toggleChat()">&#128062; <span id="fabl">שאל את Lea AI</span></button>
+</div>
+<script>
+const T={
+he:{dir:"rtl",tag:"מאמנת כלבים מקצועית",cbl:"שאל את Lea AI",greet:"שלום! אני Lea 🐾 מאמנת הכלבים שלך!",ph:"שאל שאלה...",think:"חושבת... 🐾",all:"כל המדריכים",g:"מדריכים",read:"קרא ←",back:"→ חזרה",steps:"שלבי האימון",tip:"טיפ מקצועי",ask:"🐾 שאל את Lea AI",sys:"את Lea, מאמנת כלבים מקצועית ישראלית. ענה בעברית, ידידותי וקצר. 🐾",
+stats:[{v:5,l:"מדריכים"},{v:4,l:"קטגוריות"},{v:"חיזוק חיובי",l:"שיטה"},{v:"100%",l:"ללא עונש"}],
+cats:["הכל","בסיסי","מתקדם","גורים","בעיות התנהגות"],
+data:[
+{id:1,cat:"בסיסי",ba:"b-basic",lb:"בסיסי",col:"#1e6e3a",bg:"#e6f4ea",title:"לשבת – הפקודה הראשונה",desc:"המיומנות הבסיסית ביותר. בשיטה הנכונה, כל כלב יכול ללמוד בתוך ימים ספורים.",time:"5 דק׳ ביום",tags:["חיזוק חיובי","פינוקים"],steps:[{t:"הכן פינוקים קטנים",d:"חתוך פינוקים לחתיכות קטנות."},{t:"הנח מעל האף",d:"קרב פינוק לאף הכלב, הזז לאחור ומעלה."},{t:'אמור "שב"',d:'ברגע שהישבן נוגע בקרקע – "שב!" חזק מיד.'},{t:"חזור 5-8 פעמים",d:"הפסק כשהכלב עוד נהנה."}],tip:"אל תלחץ על הישבן! השתמש בשיטת הגרירה (luring) בלבד."},
+{id:2,cat:"בסיסי",ba:"b-basic",lb:"בסיסי",col:"#7c3d12",bg:"#f5ede3",title:"בוא – פקודת החיים",desc:"הפקודה החשובה מכל – יכולה להציל חיים. חובה ללמד נכון מהיום הראשון.",time:"10 דק׳ ביום",tags:["חיזוק חיובי","מרחק הדרגתי"],steps:[{t:"התחל במרחק קצר",d:'שני צעדים, קרא בשמו בשמחה ואמור "בוא!".'},{t:"חגוג בגדול",d:"פינוק + שבחים + לטיפות. אל תחסוך לעולם."},{t:"הגדל מרחק",d:"שבוע – חצר. חודש – פארק."},{t:"לעולם אל תעניש",d:"אם הגיע, תמיד תחגוג."}],tip:'אף פעם אל תקרא "בוא" כדי לאמבץ, לחתוך ציפורניים, או לצאת מהפארק.'},
+{id:3,cat:"גורים",ba:"b-pup",lb:"גורים",col:"#1a53a0",bg:"#e8f0fe",title:"חיברות בגיל הצעיר",desc:"חלון ההזדמנויות הוא בין שבועות 3-14. מה שקורה כאן ישפיע על כל החיים.",time:"כל היום",tags:["3-14 שבועות","קריטי"],steps:[{t:"100 אנשים בשבוע",d:"גברים, נשים, ילדים, בעלי זקן, מדים – מגוון."},{t:"סביבות וקולות",d:"רחוב, מכוניות, שואב אבק, רעמים."},{t:"כלבים ידידותיים",d:"רק מחוסנים ומאוזנים."},{t:"חוויות חיוביות בלבד",d:"אם הגור מפוחד – נסוג ונסה לאט יותר."}],tip:"השקעה עכשיו = שנים של שלווה."},
+{id:4,cat:"מתקדם",ba:"b-adv",lb:"מתקדם",col:"#6a1b9a",bg:"#f3e8fd",title:"קליקר טריינינג",desc:"תקשורת מדויקת בשבריר שנייה. שיטה מדעית עם תוצאות מהירות.",time:"5 דק׳ × 3",tags:["קליקר","עיתוי מדויק"],steps:[{t:"טעינת הקליקר",d:"קליק + פינוק מיד. חזור 15 פעמים."},{t:"עיתוי הוא הכל",d:"לחץ בדיוק ברגע ההתנהגות."},{t:"יחס חיזוק",d:"1:1 → 1:3 → 1:10"},{t:"שפת גוף",d:"אוזניים פנימה = לחץ. הפחת קושי."}],tip:"נגמרו הפינוקים? 3 קליקים ברצף = משחק נגמר."},
+{id:5,cat:"בעיות התנהגות",ba:"b-mid",lb:"בינוני",col:"#a32020",bg:"#fdeaea",title:"נביחות עודפות",desc:"נביחות הן תקשורת. חייבים להבין למה הכלב נובח לפני הטיפול.",time:"2-4 שבועות",tags:["אבחון","עקביות"],steps:[{t:"זיהוי הסיבה",d:"שמירה? שעמום? חרדה? תרשום מתי ואיפה."},{t:"אל תחזק",d:'לא לצעוק "שקט!" – הכלב חושב שאתה נובח.'},{t:"שקט חיובי",d:"עורר נביחה, הצג פינוק → שותק? חזק מיד."},{t:"הפחת גירויים",d:"וילון, טיולים, צעצועי חשיבה."}],tip:"גדר אלקטרונית לא פותרת – היא מדכאת תסמין בלבד."}
+]},
+en:{dir:"ltr",tag:"Professional Dog Trainer",cbl:"Ask Lea AI",greet:"Hello! I'm Lea 🐾 your professional dog trainer. Ask me anything!",ph:"Ask a question...",think:"Thinking... 🐾",all:"All Guides",g:"guides",read:"Read →",back:"← Back",steps:"Training Steps",tip:"Pro Tip",ask:"🐾 Ask Lea AI",sys:"You are Lea, a professional dog trainer. Positive reinforcement only. Answer in English, friendly and brief. 🐾",
+stats:[{v:5,l:"Guides"},{v:4,l:"Categories"},{v:"Positive",l:"Method"},{v:"100%",l:"Force-free"}],
+cats:["All","Basic","Advanced","Puppies","Behavior"],
+data:[
+{id:1,cat:"Basic",ba:"b-basic",lb:"Basic",col:"#1e6e3a",bg:"#e6f4ea",title:"Sit – The First Command",desc:"The most fundamental skill. With the right method, every dog can learn within days.",time:"5 min/day",tags:["Positive reinforcement","Treats"],steps:[{t:"Prepare small treats",d:"Cut treats into small pieces – about 30% of normal size."},{t:"Hold above the nose",d:"Bring the treat to the nose, then move it back and up."},{t:'Say "Sit"',d:'The moment the bottom touches the floor – "Sit!" Reward immediately.'},{t:"Repeat 5-8 times",d:"Stop while the dog is still enjoying it."}],tip:"Never push the bottom down! Always use luring only."},
+{id:2,cat:"Basic",ba:"b-basic",lb:"Basic",col:"#7c3d12",bg:"#f5ede3",title:"Come – The Lifesaving Command",desc:"The most important command – it can save your dog's life. Must be taught correctly from day one.",time:"10 min/day",tags:["Positive reinforcement","Distance"],steps:[{t:"Start close",d:"Two steps away, call the name happily and say Come!"},{t:"Celebrate big",d:"Treat + praise + petting. Never hold back."},{t:"Increase distance",d:"Week 1 – backyard. Month 1 – park."},{t:"Never punish",d:"If they came, always celebrate."}],tip:"Never call Come to bathe, clip nails, or leave the park. The dog will remember!"},
+{id:3,cat:"Puppies",ba:"b-pup",lb:"Puppy",col:"#1a53a0",bg:"#e8f0fe",title:"Socialization – Critical Window",desc:"The window of opportunity is between weeks 3-14. This shapes the whole life.",time:"All day",tags:["3-14 weeks","Critical"],steps:[{t:"100 people per week",d:"Men, women, children, beards, glasses, uniforms – diverse."},{t:"Environments and sounds",d:"Streets, cars, vacuum cleaners, thunder at low volume."},{t:"Friendly dogs only",d:"Vaccinated and balanced dogs only."},{t:"Positive experiences only",d:"If the puppy is scared – back off and try slower."}],tip:"A dog not socialized early will struggle with new situations for life."},
+{id:4,cat:"Advanced",ba:"b-adv",lb:"Advanced",col:"#6a1b9a",bg:"#f3e8fd",title:"Clicker Training",desc:"Precise communication in a fraction of a second. A scientific method with fast results.",time:"5 min × 3",tags:["Clicker","Precise timing"],steps:[{t:"Charge the clicker",d:"Click + treat immediately. Repeat 15 times."},{t:"Timing is everything",d:"Click exactly at the moment of behavior."},{t:"Reinforcement ratio",d:"1:1 → 1:3 → 1:10 as skill improves."},{t:"Body language",d:"Ears back = stress. Reduce difficulty."}],tip:"Out of treats? 3 rapid clicks = session over."},
+{id:5,cat:"Behavior",ba:"b-mid",lb:"Intermediate",col:"#a32020",bg:"#fdeaea",title:"Excessive Barking",desc:"Barking is communication. You must understand why before treating it.",time:"2-4 weeks",tags:["Diagnosis","Consistency"],steps:[{t:"Identify the cause",d:"Guarding? Boredom? Anxiety? Log when and where."},{t:"Don't reinforce",d:"Never shout Quiet! – the dog thinks you are barking too."},{t:"Quiet positively",d:"Trigger bark, after 2 – present treat. Silence? Reinforce immediately."},{t:"Reduce triggers",d:"Curtains, walks, puzzle toys for bored dogs."}],tip:"Shock collars suppress symptoms only. The problem will return."}
+]},
+fr:{dir:"ltr",tag:"Éducatrice canine professionnelle",cbl:"Demandez à Lea",greet:"Bonjour! Je suis Lea 🐾 votre éducatrice canine. Posez-moi vos questions!",ph:"Posez une question...",think:"Réfléchit... 🐾",all:"Tous les guides",g:"guides",read:"Lire →",back:"← Retour",steps:"Étapes d'entraînement",tip:"Conseil pro",ask:"🐾 Demander à Lea",sys:"Tu es Lea, une éducatrice canine professionnelle. Renforcement positif uniquement. Réponds en français, amical et bref. 🐾",
+stats:[{v:5,l:"Guides"},{v:4,l:"Catégories"},{v:"Positif",l:"Méthode"},{v:"100%",l:"Sans force"}],
+cats:["Tout","Basique","Avancé","Chiots","Comportement"],
+data:[
+{id:1,cat:"Basique",ba:"b-basic",lb:"Basique",col:"#1e6e3a",bg:"#e6f4ea",title:"Assis – La première commande",desc:"La compétence fondamentale. Chaque chien peut apprendre en quelques jours.",time:"5 min/jour",tags:["Renforcement positif","Friandises"],steps:[{t:"Préparez des friandises",d:"Coupez les friandises en petits morceaux."},{t:"Tenez au-dessus du nez",d:"Approchez la friandise du nez, déplacez-la vers le haut."},{t:"Dites Assis",d:"Dès que la croupe touche le sol – Assis! Récompensez immédiatement."},{t:"Répétez 5-8 fois",d:"Arrêtez pendant que le chien apprécie encore."}],tip:"Ne poussez jamais la croupe! Utilisez toujours le leurre uniquement."},
+{id:2,cat:"Basique",ba:"b-basic",lb:"Basique",col:"#7c3d12",bg:"#f5ede3",title:"Viens – La commande vitale",desc:"La commande la plus importante – elle peut sauver la vie de votre chien.",time:"10 min/jour",tags:["Renforcement positif","Distance"],steps:[{t:"Commencez près",d:"Deux pas, appelez le nom joyeusement et dites Viens!"},{t:"Célébrez en grand",d:"Friandise + louanges + câlins. Ne lésinez jamais."},{t:"Augmentez la distance",d:"Semaine 1 – jardin. Mois 1 – parc."},{t:"Ne punissez jamais",d:"S'il est venu, fêtez toujours."}],tip:"N'appelez jamais Viens pour le bain ou couper les griffes."},
+{id:3,cat:"Chiots",ba:"b-pup",lb:"Chiot",col:"#1a53a0",bg:"#e8f0fe",title:"Socialisation – Fenêtre critique",desc:"La fenêtre est entre les semaines 3-14. Ce qui se passe ici façonne toute la vie.",time:"Toute la journée",tags:["3-14 semaines","Critique"],steps:[{t:"100 personnes par semaine",d:"Hommes, femmes, enfants, barbes, lunettes, uniformes."},{t:"Environnements et sons",d:"Rues, voitures, aspirateurs, tonnerre à faible volume."},{t:"Chiens amicaux seulement",d:"Chiens vaccinés et équilibrés uniquement."},{t:"Expériences positives uniquement",d:"Si le chiot a peur – reculez et réessayez plus lentement."}],tip:"Un chien non socialisé tôt aura des difficultés toute sa vie."},
+{id:4,cat:"Avancé",ba:"b-adv",lb:"Avancé",col:"#6a1b9a",bg:"#f3e8fd",title:"Clicker Training",desc:"Communication précise en une fraction de seconde.",time:"5 min × 3",tags:["Clicker","Timing précis"],steps:[{t:"Charger le clicker",d:"Clic + friandise immédiatement. Répétez 15 fois."},{t:"Le timing est tout",d:"Cliquez exactement au moment du comportement."},{t:"Ratio de renforcement",d:"1:1 → 1:3 → 1:10"},{t:"Langage corporel",d:"Oreilles en arrière = stress. Réduisez la difficulté."}],tip:"Plus de friandises? 3 clics rapides = séance terminée."},
+{id:5,cat:"Comportement",ba:"b-mid",lb:"Intermédiaire",col:"#a32020",bg:"#fdeaea",title:"Aboiements excessifs",desc:"Les aboiements sont une communication. Vous devez comprendre pourquoi avant de traiter.",time:"2-4 semaines",tags:["Diagnostic","Cohérence"],steps:[{t:"Identifier la cause",d:"Garde? Ennui? Anxiété? Notez quand et où."},{t:"Ne pas renforcer",d:"Ne criez jamais Silence! – le chien pense que vous aboyez aussi."},{t:"Silence positivement",d:"Déclenchez un aboiement, présentez une friandise. Silence? Récompensez."},{t:"Réduire les déclencheurs",d:"Rideaux, promenades, jouets cognitifs."}],tip:"Les colliers anti-aboiements suppriment les symptômes uniquement."}
+]}
+};
+let L="he",C=null,chatOpen=false;
+function setLang(l){L=l;const t=T[l];document.documentElement.lang=l;document.body.className=t.dir==="rtl"?"rtl":"ltr";document.getElementById("ltag").textContent=t.tag;document.getElementById("cbl").textContent=t.cbl;document.getElementById("fabl").textContent=t.cbl;document.getElementById("ci").placeholder=t.ph;document.querySelectorAll(".lb2").forEach(b=>b.classList.remove("active"));document.querySelector(`.lb2[onclick="setLang('${l}')"]`).classList.add("active");C=t.cats[0];document.getElementById("msgs").innerHTML=`<div class="m a">${t.greet}</div>`;renderStats();renderTabs();renderGrid();hideDet()}
+function renderStats(){const t=T[L];document.getElementById("stats").innerHTML=t.stats.map(s=>`<div class="stat"><div class="sv">${s.v}</div><div class="sl">${s.l}</div></div>`).join("")}
+function renderTabs(){const t=T[L];document.getElementById("tabs").innerHTML=t.cats.map(c=>`<button class="tab${c===C?" active":""}" onclick="setTab('${c}')">${c}</button>`).join("")}
+function setTab(c){C=c;renderTabs();renderGrid();hideDet()}
+function renderGrid(){const t=T[L];const all=t.cats[0];const f=C===all?t.data:t.data.filter(g=>g.cat===C);document.getElementById("stitle").textContent=C===all?t.all:C;document.getElementById("scnt").textContent=`${f.length} ${t.g}`;document.getElementById("grid").innerHTML=f.map(g=>`<div class="card" onclick="showDet(${g.id})"><div class="cs" style="background:${g.col}"></div><div class="cb"><div class="cr"><span class="badge ${g.ba}">${g.lb}</span><span class="ct">⏱ ${g.time}</span></div><h3>${g.title}</h3><p class="cd">${g.desc}</p><div class="ctags">${g.tags.map(tag=>`<span class="tag">${tag}</span>`).join("")}</div></div><div class="cf"><span class="cc">${g.cat}</span><span class="ar">${t.read}</span></div></div>`).join("");document.getElementById("grid").style.display="grid"}
+function showDet(id){const t=T[L];const g=t.data.find(x=>x.id===id);if(!g)return;document.getElementById("grid").style.display="none";const d=document.getElementById("det");d.classList.add("on");d.innerHTML=`<div class="br"><button class="bbtn" onclick="hideDet()">${t.back}</button><span style="font-size:12px;color:var(--muted)"> / ${g.title}</span></div><div class="dh"><div class="di" style="background:${g.bg}">🐾</div><div class="dht"><h2>${g.title}</h2><div class="dbd"><span class="badge ${g.ba}">${g.lb}</span><span class="badge" style="background:var(--surface2);color:var(--muted)">⏱ ${g.time}</span>${g.tags.map(tag=>`<span class="tag">${tag}</span>`).join("")}</div></div></div><div class="dbody"><p class="dd">${g.desc}</p><div style="font-size:11px;font-weight:700;margin-bottom:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">${t.steps}</div><div class="sg">${g.steps.map((s,i)=>`<div class="sc"><div class="sn" style="background:${g.col}">${i+1}</div><div><div class="st">${s.t}</div><div class="sd">${s.d}</div></div></div>`).join("")}</div><div class="tc"><div style="font-size:18px">💡</div><div><div class="ttl">${t.tip}</div><div class="ttx">${g.tip}</div></div></div><button class="abtn" onclick="askAbout('${g.title}')">${t.ask}</button></div>`}
+function hideDet(){document.getElementById("det").classList.remove("on");document.getElementById("grid").style.display="grid"}
+function toggleChat(){chatOpen=!chatOpen;document.getElementById("cp").classList.toggle("on",chatOpen);document.getElementById("fab").style.display=chatOpen?"none":"flex"}
+function askAbout(title){if(!chatOpen)toggleChat();const ci=document.getElementById("ci");const t=T[L];ci.value=L==="he"?`יש לי שאלה על "${title}" – `:L==="fr"?`J'ai une question sur "${title}" – `:`I have a question about "${title}" – `;ci.focus()}
+async function send(){const ci=document.getElementById("ci"),text=ci.value.trim();if(!text)return;const sb=document.getElementById("sb");sb.disabled=true;ci.value="";const t=T[L];const msgs=document.getElementById("msgs");msgs.innerHTML+=`<div class="m u">${text}</div><div class="m a" id="thi" style="opacity:.5;font-style:italic">${t.think}</div>`;msgs.scrollTop=msgs.scrollHeight;try{const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:t.sys,messages:[{role:"user",content:text}]})});const d=await r.json();document.getElementById("thi").remove();msgs.innerHTML+=`<div class="m a">${(d.content?.[0]?.text||"Error").replace(/\n/g,"<br>")}</div>`}catch{document.getElementById("thi").remove();msgs.innerHTML+=`<div class="m a">⚠️ Error</div>`}sb.disabled=false;msgs.scrollTop=msgs.scrollHeight}
+setLang("he");
+</script>
+</body>
+</html>
